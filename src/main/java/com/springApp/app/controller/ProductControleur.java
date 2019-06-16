@@ -5,9 +5,13 @@ import java.util.List;
 import javax.ws.rs.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springApp.app.model.Product;
@@ -26,7 +30,7 @@ public class ProductControleur {
 	@GetMapping(path="/save")
 	public String  addProduct() 
 	{
-      ss.addp();
+     // ss.addp();
       return "OK";
 	}
 	
@@ -46,15 +50,30 @@ public class ProductControleur {
 	}
 	
 	@GetMapping("/{id}")
-	public String  getP(@PathVariable String id) 
+	public Product  getP(@PathVariable String id) 
 	{
      
-     return "Bonjour :" +id ;
+     return ss.findProduct(id);
 	}
+	
+	
 	@GetMapping("/test")
 	public String  getP1(@PathParam(value = "tt") String tt) 
 	{
      
      return "Bonjour :" +tt ;
 	}
+	
+	@RequestMapping(path="/addProduct"  ,method = RequestMethod.POST ,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Product addProduct1(@RequestBody Product p) 
+	{
+     
+    ss.addp(p);
+		
+    
+    return p ;
+    
+	}
+	
+	
 }

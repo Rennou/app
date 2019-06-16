@@ -6,13 +6,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.hibernate.Query;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.springApp.app.model.Product;
 
+
+
+
+
+
+
 @Repository
 @Transactional
+
 public class dao {
 
 	@PersistenceContext
@@ -35,4 +43,12 @@ public class dao {
 		
 	}
 	
+	
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public Product findPoduct(String code){
+		
+	return  em.find(Product.class, code);
+		
+	}
 }
