@@ -1,5 +1,6 @@
 package com.springApp.app.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,15 @@ public class ProductService {
 		
 	}
 
-	public void  addp(Product p) {
+	public boolean   addp(Product p) {
 	
-		daoP.addProoduct(p);
+		try {
+			return daoP.addProoduct(p);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		System.out.println("Erreur de persistance");
+		return false ;
+		}
 		
 	}
 	

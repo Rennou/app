@@ -5,7 +5,9 @@ import java.util.List;
 import javax.ws.rs.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,10 +52,18 @@ public class ProductControleur {
 	}
 	
 	@GetMapping("/{id}")
-	public Product  getP(@PathVariable String id) 
-	{
+	public ResponseEntity<?>  getP(@PathVariable String id) 
+	{ 
+		
+     Product p = ss.findProduct(id) ;
      
-     return ss.findProduct(id);
+     System.out.println("------------------------------"+(null==p?"ouinull":"nonNull"));
+     if(null !=p )
+    return new ResponseEntity<>(p, HttpStatus.CREATED);
+     else
+    	 
+    	 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
 	}
 	
 	
@@ -64,15 +74,20 @@ public class ProductControleur {
      return "Bonjour :" +tt ;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(path="/addProduct"  ,method = RequestMethod.POST ,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Product addProduct1(@RequestBody Product p) 
+	public ResponseEntity<Void> addProduct1(@RequestBody Product p) 
 	{
-     
-    ss.addp(p);
+    
+     if (ss.addp(p))
 		
-    
-    return p ;
-    
+       
+    	 return new ResponseEntity<>(null, HttpStatus.CREATED);
+     
+     else
+    	 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    	 
+    	 
 	}
 	
 	

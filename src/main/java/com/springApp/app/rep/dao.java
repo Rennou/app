@@ -1,5 +1,6 @@
 package com.springApp.app.rep;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -29,12 +30,13 @@ public class dao {
 	
 	
 	@Transactional
-	public void addProoduct(Product p) {
-		
-		em.merge(p);
+	public boolean addProoduct(Product p) throws SQLException {
+		System.out.println("debut perssiste");
+		em.persist(p);
+		return  true ;
 	
 	}
-	
+	 
 	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<Product> findAll(){
@@ -46,9 +48,10 @@ public class dao {
 	
 	@Transactional
 	@SuppressWarnings("unchecked")
-	public Product findPoduct(String code){
-		
+	public Product findPoduct(String code){ System.out.println("-------------------------hghh-----");
+
 	return  em.find(Product.class, code);
 		
-	}
+	
+}
 }
